@@ -1,21 +1,44 @@
 #!/bin/bash -x
-read -p "enter choice:" choice
-readonly celsiusToFarenheit=1
-readonly farenheitTocelsius=2
-function getValue(){
-case $choice in
-	1)
-		read -p "enter value in celsius" celsius
-			Fah=`echo "scale=2; $celsius*9/5+32" | bc`
-			echo "fareheit to celsius is $Fah"
-			;;
-	2)
-		read -p "enter value in Farenheit" farenheit
-			celsius=`echo "scale=2; $farenheit-32*5/9" | bc`
-			echo "celsius to farenheit is $celsius"
-			;;
-	*) echo "inalid input"
-		;;	
-esac
+
+function farToCel() {
+read -p "Enter Value between 32 to 212 F" degF
+	if [[ $degF -le 32 || $degF -ge 212  ]]
+	then
+		echo "Enter valid input"
+	else 
+		degC=` echo "scale=2;($degF - 32) *5/9" | bc `
+		echo "$degF Far = $degC Cel" 
+	fi
 }
-getValue
+
+function celToFar() {
+read -p "Enter Value between 0 to 100 Cel" degC
+	if [[ $degC -le 0 || $degC -ge 100  ]]
+	then
+		echo "Enter valid input"
+	else 
+		degF=` echo "scale=2;($degC * 9/5) + 32" | bc `
+		echo "$degC Cel = $degF Far" 
+	fi
+}
+
+
+function userChoice() {
+	echo -e "1 for Convert Far to Cel \n2 for convert Cel to Far"
+	read value
+	
+	case $value in
+			1)
+				farToCel
+			;;
+			2)
+				celToFar
+			;;
+			*)
+				echo "Wrong Input"
+			;;
+	esac
+}
+
+userChoice
+
