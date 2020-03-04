@@ -1,14 +1,20 @@
-#!/bin/bash
-count=1
-while [ $count -ne 12 ]
+#!/bin/bash -x
+head=1
+tail=0
+while [[ $head -lt 11 &&  $tail -lt 11 ]]
 do
 	randomFlip=$(($RANDOM%2))
-   if [[ $randomFlip -eq 1  ]]
-   then
-      echo "$count : Heads"
-   else
-      echo "$count : Tails"
+	if [[ $randomFlip -eq 1 ]]
+	then
+		((head++))
+	else
+		((tail++))
 	fi
-		((count++))
 done
-
+	echo "$head $tail"
+	if [ $head -gt $tail ]
+	then
+		 echo heads wins
+	else
+		 echo tail wins
+	fi
